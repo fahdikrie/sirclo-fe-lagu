@@ -3,9 +3,9 @@ import { useInfiniteQuery } from 'react-query';
 import tw from 'twin.macro';
 
 import api from 'api';
-import ArtistCard from './ArtistCard';
+import TrackCard from './TrackCard';
 
-interface ArtistFragmentProps {
+interface TrackFragmentProps {
   name: string;
 }
 
@@ -14,20 +14,20 @@ const SFragment = tw.div`
   max-w-2xl mx-auto
 `;
 
-const ArtistFragment = ({ name }: ArtistFragmentProps) => {
+const TrackFragment = ({ name }: TrackFragmentProps) => {
   const { data, status, fetchNextPage, hasNextPage } = useInfiniteQuery(
     name,
     async ({ pageParam = 1 }) =>
-      await fetch(`${api.GET_ARTISTS_URL}&page=${pageParam}&limit=20`).then(
+      await fetch(`${api.GET_TRACKS_URL}&page=${pageParam}&limit=20`).then(
         async (result) => {
           const returnData = await result.json();
-          const artists = returnData?.artists?.artist;
+          const tracks = returnData?.tracks?.track;
 
           const modifiedData = {
             ...returnData,
-            artists: {
-              ...returnData.artists,
-              artist: artists.slice(artists.length - 20),
+            tracks: {
+              ...returnData.tracks,
+              track: tracks.slice(tracks.length - 20),
             },
           };
 
@@ -35,9 +35,9 @@ const ArtistFragment = ({ name }: ArtistFragmentProps) => {
         }
       ),
     {
-      getNextPageParam: (returnData: ArtistData) => {
-        const page = Number(returnData?.artists?.['@attr'].page);
-        const totalPages = Number(returnData?.artists?.['@attr'].totalPages);
+      getNextPageParam: (returnData: TrackData) => {
+        const page = Number(returnData?.tracks?.['@attr'].page);
+        const totalPages = Number(returnData?.tracks?.['@attr'].totalPages);
 
         if (page < totalPages) {
           return page + 1;
@@ -58,8 +58,8 @@ const ArtistFragment = ({ name }: ArtistFragmentProps) => {
           <>
             {data?.pages.map((page) => (
               <>
-                {page?.artists?.artist?.map((artist: Artist, id: number) => (
-                  <ArtistCard key={id} artist={artist} />
+                {page?.tracks?.track?.map((track: Track, id: number) => (
+                  <TrackCard key={id} track={track} />
                 ))}
               </>
             ))}
@@ -70,4 +70,4 @@ const ArtistFragment = ({ name }: ArtistFragmentProps) => {
   );
 };
 
-export default ArtistFragment;
+export default TrackFragment;

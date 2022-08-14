@@ -5,10 +5,16 @@ import tw from 'twin.macro';
 import Navigation from '@/components/Navigation';
 import SearchBar from '@/components/SearchBar';
 import ArtistFragment from '@/components/ArtistFragment';
+import TrackFragment from '@/components/TrackFragment';
 
 const Home: NextPage = () => {
   const [activeTab, setActiveTab] = useState<IActiveTab>('tracks');
   const [query, setQuery] = useState<string>('');
+
+  const FRAGMENT_SELECTOR = {
+    tracks: <TrackFragment name="tracks" />,
+    artists: <ArtistFragment name="artists" />,
+  };
 
   return (
     <div
@@ -24,7 +30,7 @@ const Home: NextPage = () => {
         setQuery={setQuery}
         placeholder={`search by ${activeTab.slice(0, -1)}...`}
       />
-      <ArtistFragment name="artist-fragment" />
+      {FRAGMENT_SELECTOR[activeTab]}
     </div>
   );
 };
