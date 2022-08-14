@@ -11,7 +11,9 @@ interface TabProps extends NavigationProps {
 }
 
 const SWrapper = tw.div`
-  gap-20 pt-20 pb-10
+  gap-20
+  pt-10 md:pt-20
+  pb-8 md:pb-10
   flex justify-center items-center
 `;
 

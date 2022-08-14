@@ -14,7 +14,8 @@ const Home: NextPage = () => {
     <div
       css={tw`
         container min-h-screen mx-auto
-        px-20 pt-10
+        px-5 md:px-20
+        pt-2.5 md:pt-10
       `}
     >
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
