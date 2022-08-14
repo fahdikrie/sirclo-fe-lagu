@@ -1,9 +1,14 @@
 import type { AppProps } from 'next/app';
 
+import GlobalStyles from '@/components/GlobalStyles';
+
 import '@/styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+const App = ({ Component, pageProps }: AppProps) => (
+  <div>
+    <GlobalStyles />
+    <Component {...pageProps} />
+  </div>
+);
 
-export default MyApp;
+export default App;

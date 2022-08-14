@@ -1,7 +1,4 @@
 {
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
   "plugins": ["@typescript-eslint"],
   "extends": [
     "next/core-web-vitals",
@@ -16,5 +13,4 @@
     "@next/next/no-sync-scripts": "off",
     "@next/next/no-img-element": "off"
   }
-
 }
