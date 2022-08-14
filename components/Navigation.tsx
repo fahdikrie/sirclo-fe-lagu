@@ -24,10 +24,10 @@ const STab = styled.div(({ isActiveTab }: { isActiveTab: boolean }) => [
     border-2
     border-transparent
   `,
-  isActiveTab && tw`border-b-white!`,
+  isActiveTab && tw`border-b-purple-700!`,
 ]);
 
-const TABS = ['songs', 'artists'];
+const TABS = ['tracks', 'artists'];
 
 const Tab = ({ activeTab, setActiveTab, name }: TabProps) => (
   <STab

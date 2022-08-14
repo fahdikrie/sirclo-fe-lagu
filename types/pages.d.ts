@@ -1,1 +1,1 @@
-type IActiveTab = 'songs' | 'artists';
+type IActiveTab = 'tracks' | 'artists';

@@ -15,7 +15,7 @@ const SSearchBar = tw.div`
   flex items-center gap-2
   w-full md:max-w-xl
 
-  py-1.5 pl-2.5 pr-2
+  py-1.5 px-1.5
   rounded-xl
 `;
 
@@ -26,13 +26,15 @@ const SInput = tw.input`
 `;
 
 const SIcon = tw.div`
-  w-4 h-4
+  w-4 h-4 ml-0.5
 `;
 
 const SButton = tw.button`
   bg-purple-700 text-white
   py-1 px-1.5 rounded-md
   text-sm
+
+  hidden md:block
 `;
 
 const Icon = () => (
