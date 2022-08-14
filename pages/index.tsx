@@ -8,6 +8,7 @@ import ArtistFragment from '@/components/ArtistFragment';
 import TrackFragment from '@/components/TrackFragment';
 import TrackFragmentSearch from '@/components/TrackFragmentSearch';
 import ArtistFragmentSearch from '@/components/ArtistFragmentSearch';
+import Head from 'next/head';
 
 const Home: NextPage = () => {
   const [activeTab, setActiveTab] = useState<IActiveTab>('tracks');
@@ -24,23 +25,29 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div
-      css={tw`
-        container min-h-screen mx-auto
-        px-5 md:px-20
-        pt-2.5 md:pt-10
-      `}
-    >
-      <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      <SearchBar
-        query={query}
-        setQuery={setQuery}
-        placeholder={`search by ${activeTab.slice(0, -1)}...`}
-      />
-      {query !== ''
-        ? SEARCH_FRAGMENT_SELECTOR[activeTab]
-        : FRAGMENT_SELECTOR[activeTab]}
-    </div>
+    <>
+      <Head>
+        <title>Last FM&apos;s Top Charts</title>
+      </Head>
+
+      <div
+        css={tw`
+          container min-h-screen mx-auto
+          px-5 md:px-20
+          pt-2.5 md:pt-10
+        `}
+      >
+        <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
+        <SearchBar
+          query={query}
+          setQuery={setQuery}
+          placeholder={`search by ${activeTab.slice(0, -1)}...`}
+        />
+        {query !== ''
+          ? SEARCH_FRAGMENT_SELECTOR[activeTab]
+          : FRAGMENT_SELECTOR[activeTab]}
+      </div>
+    </>
   );
 };
 
