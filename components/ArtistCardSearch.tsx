@@ -1,12 +1,9 @@
 import { nFormatter } from 'utils/number';
+import { ArtistCardProps } from './ArtistCard';
 import { SCard, SInfo, SProfilePicture } from './Card';
 import DisplayPhoto from './DisplayPhoto';
 
-export interface ArtistCardProps {
-  artist: Artist;
-}
-
-const ArtistCard = ({ artist }: ArtistCardProps) => (
+const ArtistCardSearch = ({ artist }: ArtistCardProps) => (
   <SCard href={artist.url ?? '#'} target="_blank" rel="noreferrer">
     <SProfilePicture>
       <DisplayPhoto src={artist.image[3]['#text']} alt={artist.name} />
@@ -14,10 +11,6 @@ const ArtistCard = ({ artist }: ArtistCardProps) => (
     <SInfo>
       <h2 className="name">{artist.name}</h2>
       <div className="statistics">
-        <div className="statistics__item">
-          <p>🎧 Times played</p>
-          <span>{nFormatter(Number(artist.playcount))}</span>
-        </div>
         <div className="statistics__item">
           <p>👤 Listeners</p>
           <span>{nFormatter(Number(artist.listeners))}</span>
@@ -27,4 +20,4 @@ const ArtistCard = ({ artist }: ArtistCardProps) => (
   </SCard>
 );
 
-export default ArtistCard;
+export default ArtistCardSearch;

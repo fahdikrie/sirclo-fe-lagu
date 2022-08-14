@@ -16,25 +16,25 @@ const SFragment = tw.div`
 `;
 
 const TrackFragment = ({ name }: TrackFragmentProps) => {
+  const fetchTracks = async (pageParam: number) =>
+    await fetch(api.GET_TRACKS_URL(pageParam)).then(async (result) => {
+      const returnData = await result.json();
+      const tracks = returnData?.tracks?.track;
+
+      const modifiedData = {
+        ...returnData,
+        tracks: {
+          ...returnData.tracks,
+          track: tracks.slice(tracks.length - 20),
+        },
+      };
+
+      return modifiedData;
+    });
+
   const { data, status, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    name,
-    async ({ pageParam = 1 }) =>
-      await fetch(`${api.GET_TRACKS_URL}&page=${pageParam}&limit=20`).then(
-        async (result) => {
-          const returnData = await result.json();
-          const tracks = returnData?.tracks?.track;
-
-          const modifiedData = {
-            ...returnData,
-            tracks: {
-              ...returnData.tracks,
-              track: tracks.slice(tracks.length - 20),
-            },
-          };
-
-          return modifiedData;
-        }
-      ),
+    [name],
+    async ({ pageParam = 1 }) => await fetchTracks(pageParam),
     {
       getNextPageParam: (returnData: TrackData) => {
         const page = Number(returnData?.tracks?.['@attr'].page);
@@ -57,13 +57,11 @@ const TrackFragment = ({ name }: TrackFragmentProps) => {
           loader={<FragmentLoading />}
         >
           <>
-            {data?.pages.map((page) => (
-              <>
-                {page?.tracks?.track?.map((track: Track, id: number) => (
-                  <TrackCard key={id} track={track} />
-                ))}
-              </>
-            ))}
+            {data?.pages.map((page) => {
+              return page?.tracks?.track?.map((track: Track, id: number) => (
+                <TrackCard key={id} track={track} />
+              ));
+            })}
           </>
         </InfiniteScroll>
       )}

@@ -16,25 +16,25 @@ const SFragment = tw.div`
 `;
 
 const ArtistFragment = ({ name }: ArtistFragmentProps) => {
+  const fetchArtists = async (pageParam: number) =>
+    await fetch(api.GET_ARTISTS_URL(pageParam)).then(async (result) => {
+      const returnData = await result.json();
+      const artists = returnData?.artists?.artist;
+
+      const modifiedData = {
+        ...returnData,
+        artists: {
+          ...returnData.artists,
+          artist: artists.slice(artists.length - 20),
+        },
+      };
+
+      return modifiedData;
+    });
+
   const { data, status, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    name,
-    async ({ pageParam = 1 }) =>
-      await fetch(`${api.GET_ARTISTS_URL}&page=${pageParam}&limit=20`).then(
-        async (result) => {
-          const returnData = await result.json();
-          const artists = returnData?.artists?.artist;
-
-          const modifiedData = {
-            ...returnData,
-            artists: {
-              ...returnData.artists,
-              artist: artists.slice(artists.length - 20),
-            },
-          };
-
-          return modifiedData;
-        }
-      ),
+    [name],
+    async ({ pageParam = 1 }) => await fetchArtists(pageParam),
     {
       getNextPageParam: (returnData: ArtistData) => {
         const page = Number(returnData?.artists?.['@attr'].page);
@@ -57,13 +57,13 @@ const ArtistFragment = ({ name }: ArtistFragmentProps) => {
           loader={<FragmentLoading />}
         >
           <>
-            {data?.pages.map((page) => (
-              <>
-                {page?.artists?.artist?.map((artist: Artist, id: number) => (
+            {data?.pages.map((page) => {
+              return page?.artists?.artist?.map(
+                (artist: Artist, id: number) => (
                   <ArtistCard key={id} artist={artist} />
-                ))}
-              </>
-            ))}
+                )
+              );
+            })}
           </>
         </InfiniteScroll>
       )}

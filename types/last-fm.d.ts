@@ -4,8 +4,12 @@ type Image = {
 };
 
 type Attribute = {
-  page: number;
-  perPage: number;
-  totalPages: number;
-  total: number;
+  page?: number;
+  perPage?: number;
+  totalPages?: number;
+  total?: number;
 };
+
+type FetchUrlType =
+  | ((page: number) => string)
+  | ((page: number, query: string) => string);
