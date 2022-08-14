@@ -4,6 +4,7 @@ import tw from 'twin.macro';
 
 import api from 'api';
 import ArtistCard from './ArtistCard';
+import FragmentLoading from './FragmentLoading';
 
 interface ArtistFragmentProps {
   name: string;
@@ -53,7 +54,7 @@ const ArtistFragment = ({ name }: ArtistFragmentProps) => {
           dataLength={(data?.pages.length ?? 0) * 20}
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
-          loader={<h4>Loading...</h4>}
+          loader={<FragmentLoading />}
         >
           <>
             {data?.pages.map((page) => (

@@ -4,6 +4,7 @@ import tw from 'twin.macro';
 
 import api from 'api';
 import TrackCard from './TrackCard';
+import FragmentLoading from './FragmentLoading';
 
 interface TrackFragmentProps {
   name: string;
@@ -53,7 +54,7 @@ const TrackFragment = ({ name }: TrackFragmentProps) => {
           dataLength={(data?.pages.length ?? 0) * 20}
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
-          loader={<h4>Loading...</h4>}
+          loader={<FragmentLoading />}
         >
           <>
             {data?.pages.map((page) => (

@@ -11,8 +11,18 @@ interface TabProps extends NavigationProps {
 }
 
 const SWrapper = tw.div`
-  gap-20
   pt-10 md:pt-20
+  text-center
+`;
+
+const STitle = tw.h1`
+  font-black text-white
+  text-3xl md:text-5xl
+  mb-5 md:mb-10
+`;
+
+const SNavigation = tw.div`
+  gap-20
   pb-8 md:pb-10
   flex justify-center items-center
 `;
@@ -36,15 +46,20 @@ const Tab = ({ activeTab, setActiveTab, name }: TabProps) => (
     isActiveTab={activeTab === (name as string)}
     onClick={() => setActiveTab(name)}
   >
-    {name}
+    by {name}
   </STab>
 );
 
 const Navigation = (props: NavigationProps) => (
   <SWrapper>
-    {TABS.map((tab, id) => (
-      <Tab key={id} name={tab as IActiveTab} {...props} />
-    ))}
+    <STitle>
+      <u>Last FM&apos;s</u> Top Charts
+    </STitle>
+    <SNavigation>
+      {TABS.map((tab, id) => (
+        <Tab key={id} name={tab as IActiveTab} {...props} />
+      ))}
+    </SNavigation>
   </SWrapper>
 );
 
