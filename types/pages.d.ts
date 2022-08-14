@@ -1,0 +1,1 @@
+type IActiveTab = 'songs' | 'artists';
